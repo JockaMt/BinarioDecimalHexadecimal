@@ -28,4 +28,19 @@ Ou veja na [Página Oficial](https://pypi.org/project/PySide6/) para mais inform
 
 <br>
 
-![screenshot](/imagens/screenshot.png)
+![screenshot](/imagens/screenshot3.png)
+
+<br>
+O aplicativo também possúi um modo escuro:
+
+<br>
+
+![screenshot](/imagens/screenshot2.png)
+
+<br>
+
+Resultado:
+
+<br>
+
+![screenshot](/imagens/screenshot1.png)
