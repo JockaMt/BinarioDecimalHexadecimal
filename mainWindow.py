@@ -3,10 +3,11 @@ from imports import *
 class mainWindow(QWidget):
     names = ["Bin", "Dec", "Hex"]
     darkmode = False
+    a = color[0]
     
     def __init__(self):
         super().__init__()
-        apply_stylesheet(self, color[1])
+        apply_stylesheet(self, self.a)
 
 
         self.tela = QVBoxLayout(self)
@@ -86,36 +87,82 @@ class mainWindow(QWidget):
         self.setWindowTitle("Conversor")
         self.show()
         self.converter.clicked.connect(lambda: self.converterNum(self.downBut.currentText(), self.upLine.text() if self.upLine.text() else "", self.upBut.currentText()))
-        
+    
+    # ///// - - - Dark Mode - - - /////    
     def switch(self):
         self.darkmode = not self.darkmode
-        if self.darkmode:
-            apply_stylesheet(self, color[0])
+        if self.a == color[0]:
+            self.a = color[1]
         else:
-            apply_stylesheet(self, color[1])
-       
+            self.a = color[0]
+        apply_stylesheet(self, self.a)
+    
+    #///// - - - Função para converter - - - /////   
     def converterNum(self, mode, i, input):
         if mode == "Bin":
             if input == "Dec":
-                if i.isdigit():
-                    num = int(i)
-                    bin = list()
-                    while num >= 2:
-                        bin.append(num % 2)
-                        num = num // 2
-                    bin.append(1)
-                    bin.reverse()
-                    convertido = str()
-                    for j in bin:
-                        convertido = convertido + str(j)
-                    if num != 0:
-                        return self.resultado(i, convertido, mode)
+                if i.find(",") == -1 and i.find(".") == -1:
+                    if i.isdigit():
+                        num = int(i)
+                        bin = list()
+                        while num >= 2:
+                            bin.append(num % 2)
+                            num = num // 2
+                        bin.append(1)
+                        bin.reverse()
+                        convertido = str()
+                        for j in bin:
+                            convertido = convertido + str(j)
+                        if num != 0:
+                            return self.resultado(i, convertido, mode)
+                        else:
+                            return self.resultado(i, 0, mode)
+                    elif i == "":
+                        pass
                     else:
-                        return f'Binário: 0'
-                elif i == "":
-                    pass
-                else:
-                    return self.downLine.setText(f'{i} não é um número inteiro!')
+                        return self.downLine.setText(f'{i} não é um número inteiro!')
+                elif i.find(",") >= 0 or i.find(".") >= 0:
+                    numeroSplit = []
+                    if i.find(",") >= 0:
+                        numeroSplit = i.split(',')
+                    elif i.find(".") >= 0:
+                        numeroSplit = i.split('.')
+                    inteiro = numeroSplit[0]
+                    if inteiro.isdigit():
+                        if inteiro.isdigit():
+                            num = int(inteiro)
+                        bin = list()
+                        while num >= 2:
+                            bin.append(num % 2)
+                            num = num // 2
+                        bin.append(1)
+                        bin.reverse()
+                        convertido = str()
+                        for j in bin:
+                            convertido = convertido + str(j)
+                        if num != 0:
+                            inteiro = convertido
+                        else:
+                            inteiro = '0'
+                    decimal = numeroSplit[1]
+                    if decimal.isdigit():
+                        if decimal.isdigit():
+                            num = int(decimal)
+                        bin = list()
+                        while num >= 2:
+                            bin.append(num % 2)
+                            num = num // 2
+                        bin.append(1)
+                        bin.reverse()
+                        convertido = str()
+                        for j in bin:
+                            convertido = convertido + str(j)
+                        if num != 0:
+                            decimal = convertido
+                        else:
+                            decimal = '0'
+                    convertido = f'{inteiro},{decimal[:3]}'
+                    return self.resultado(i, convertido, mode)
             elif input == "Hex":
                 if i.isdigit():
                     num = int(i)
