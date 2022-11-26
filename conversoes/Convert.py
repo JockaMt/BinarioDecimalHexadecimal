@@ -5,7 +5,6 @@ class retorno:
         if a == "":
             return self.downLine.setText('')
         i = a.replace(',', '.')
-        i.upper()
         if i.find('.') == -1:
             inteiro = defs.inteiroDef(self, i, base)
             if inteiro != None:
@@ -26,7 +25,6 @@ class retorno:
         if a == "":
             return self.downLine.setText('')
         i = a.replace(',', '.')
-        i.upper()
         if i.find('.') == -1:
             inteiro = defs.inteiroFed(self, i, base)
             if inteiro != None:

@@ -123,9 +123,9 @@ class mainWindow(QWidget):
             
         elif input == "Hex":
             if mode == "Dec":
-                return retorno.toDec(self, mode, i, 16)
+                return retorno.toDec(self, mode, i.upper(), 16)
             elif mode == "Bin":
-                dec = str(defs.inteiroFed(self, str(i), 16))
+                dec = str(defs.inteiroFed(self, i.upper(), 16))
                 return retorno.fromDec(self, mode, dec, 2)
             elif input == "Hex":
                 return self.downLine.setText(f'Bases iguais - {i}') 
