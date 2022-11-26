@@ -1,4 +1,5 @@
 from imports import *
+from conversoes.conver import defs
 
 class mainWindow(QWidget):
     names = ["Bin", "Dec", "Hex"]
@@ -87,6 +88,9 @@ class mainWindow(QWidget):
         self.setWindowTitle("Conversor")
         self.show()
         self.converter.clicked.connect(lambda: self.converterNum(self.downBut.currentText(), self.upLine.text() if self.upLine.text() else "", self.upBut.currentText()))
+        self.converter.setShortcut('Enter')
+        
+        self.upLine.setFocus()
     
     # ///// - - - Dark Mode - - - /////    
     def switch(self):
@@ -99,109 +103,38 @@ class mainWindow(QWidget):
     
     #///// - - - Função para converter - - - /////   
     def converterNum(self, mode, i, input):
-        if mode == "Bin":
-            if input == "Dec":
-                if i.find(",") == -1 and i.find(".") == -1:
-                    if i.isdigit():
-                        num = int(i)
-                        bin = list()
-                        while num >= 2:
-                            bin.append(num % 2)
-                            num = num // 2
-                        bin.append(1)
-                        bin.reverse()
-                        convertido = str()
-                        for j in bin:
-                            convertido = convertido + str(j)
-                        if num != 0:
-                            return self.resultado(i, convertido, mode)
-                        else:
-                            return self.resultado(i, 0, mode)
-                    elif i == "":
-                        pass
-                    else:
-                        return self.downLine.setText(f'{i} não é um número inteiro!')
-                elif i.find(",") >= 0 or i.find(".") >= 0:
-                    numeroSplit = []
-                    if i.find(",") >= 0:
-                        numeroSplit = i.split(',')
-                    elif i.find(".") >= 0:
-                        numeroSplit = i.split('.')
-                    inteiro = numeroSplit[0]
-                    if inteiro.isdigit():
-                        if inteiro.isdigit():
-                            num = int(inteiro)
-                        bin = list()
-                        while num >= 2:
-                            bin.append(num % 2)
-                            num = num // 2
-                        bin.append(1)
-                        bin.reverse()
-                        convertido = str()
-                        for j in bin:
-                            convertido = convertido + str(j)
-                        if num != 0:
-                            inteiro = convertido
-                        else:
-                            inteiro = '0'
-                    decimal = numeroSplit[1]
-                    if decimal.isdigit():
-                        if decimal.isdigit():
-                            num = int(decimal)
-                        bin = list()
-                        while num >= 2:
-                            bin.append(num % 2)
-                            num = num // 2
-                        bin.append(1)
-                        bin.reverse()
-                        convertido = str()
-                        for j in bin:
-                            convertido = convertido + str(j)
-                        if num != 0:
-                            decimal = convertido
-                        else:
-                            decimal = '0'
-                    convertido = f'{inteiro},{decimal[:3]}'
-                    return self.resultado(i, convertido, mode)
+        
+        if input == "Dec":
+            if mode == "Bin":
+                return retorno.fromDec(self, mode, i, 2)
+            elif mode == "Hex":
+                return retorno.fromDec(self, mode, i, 16)
+            elif mode == "Dec":
+                return self.downLine.setText(f'Bases iguais - {i}')
+            
+        elif input == "Bin":
+            if mode == "Dec":
+                return retorno.toDec(self, mode, i, 2)
+            elif mode == "Bin":
+                return self.downLine.setText(f'Bases iguais - {i}')
+            elif mode == "Hex":
+                dec = str(defs.inteiroFed(self, str(i), 2))
+                return retorno.fromDec(self, mode, dec, 16)
+            
+        elif input == "Hex":
+            if mode == "Dec":
+                return retorno.toDec(self, mode, i, 16)
+            elif mode == "Bin":
+                dec = str(defs.inteiroFed(self, str(i), 16))
+                return retorno.fromDec(self, mode, dec, 2)
             elif input == "Hex":
-                if i.isdigit():
-                    num = int(i)
-                    ...
-                    convertido = str()
-                    if num != 0:
-                        return self.resultado(i, convertido, mode)
-                    else:
-                        return f'Binário: 0'
-                else:
-                    return self.downLine.setText(f'{i} não é um número inteiro!')
-        elif mode == "Hex":
-            if i.isdigit():
-                num = int(i)
-                ...
-                convertido = str()
-                if num != 0:
-                    return self.resultado(i, convertido, mode)
-                else:
-                    return f'Hexadecimal: 0'
-            else:
-                return self.downLine.setText(f'{i} não é um número inteiro!')
-        elif mode == "Dec":
-            if i.isdigit():
-                num = int(i)
-                ...
-                convertido = 0
-                if num != 0:
-                    return self.resultado(i, convertido, mode)
-                else:
-                    return f'Decimal: 0'
-            else:
-                return self.downLine.setText(f'{i} não é um número inteiro!')
-       
+                return self.downLine.setText(f'Bases iguais - {i}') 
             
     def resultado(self, input, output, convesion: str):
+        entrada = input.replace('.', ',')
         if convesion == "Bin":
-            return self.downLine.setText(f"O binário de {input} é {output}")
+            return self.downLine.setText(f"O binário de {entrada} é {output}")
         elif convesion == "Dec":
-            return self.downLine.setText(f"O decimal de {input} é {output}")
+            return self.downLine.setText(f"O decimal de {entrada} é {output}")
         elif convesion == "Hex":
-            return self.downLine.setText(f"O hexadecimal de {input} é {output}")
+            return self.downLine.setText(f"O hexadecimal de {entrada} é {output}")
