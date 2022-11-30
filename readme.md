@@ -10,7 +10,8 @@ Este projeto se trata de um conversor de bases, binário, decimal e hexadecimal.
 
 ### Como utilizar?
 
-Para rodar este programa você precisa ter o [PySide6](https://pypi.org/project/PySide6/) instalado na sua máquina.<br>
+Para rodar este programa você precisa ter o [PyQt5](https://pypi.org/project/PyQt5/) instalado na sua máquina.<br>
+Este projeto usa a versão 3.11.8 do python.<br>
 Para instalar eu aconselho usar um ambiente virtual:<br>
 
 ```
