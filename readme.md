@@ -16,11 +16,11 @@ Para instalar eu aconselho usar um ambiente virtual:<br>
 ```
 python -m venv <nome-do-ambiente>
 ```
-Logo após, instale o pacote utilizado:<br>
+Logo após, instale o `PyQt5`, o pacote utilizado:<br>
 ```
-pip install PySide6
+pip install PyQt5
 ```
-Ou veja na [Página Oficial](https://pypi.org/project/PySide6/) para mais informações.
+Ou veja na [Página Oficial](https://pypi.org/project/PyQt5/) para mais informações.
 
 <br>
 
